@@ -4,9 +4,9 @@ import Check from '../assets/check.svg';
 import Box from '../assets/box.svg';
 
 interface TodoProps {
-    isChecked: boolean,
+    isChecked?: boolean,
     title: string,
-    onPress: () => void,
+    onPress?: () => void,
 }
 
 const Todo = ({isChecked, title, onPress}: TodoProps) => {

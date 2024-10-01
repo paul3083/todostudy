@@ -1,7 +1,10 @@
-interface Todo {
-    uuid: string;
+export interface Todo {
+    id?: string;
     title: string;
     content: string;
 }
 
-export default Todo;
+export interface CreateTodoRequest {
+    title: string;
+    content: string;
+}

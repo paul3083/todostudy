@@ -1,10 +1,11 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, View, Text, TextInput, Pressable} from "react-native";
+import {SafeAreaView, StyleSheet, View, Text, TextInput} from "react-native";
 import {RootNavigationGraph} from "../navigation/RootNavigation.tsx";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import Header from "../components/Header.tsx";
 import FillButton from "../components/FillButton.tsx";
 import Box from '../assets/box.svg';
+import {addTodo} from "../lib/api/Todo.tsx";
 
 interface AddScreenProps
     extends NativeStackScreenProps<RootNavigationGraph> {
@@ -13,7 +14,6 @@ interface AddScreenProps
 const AddScreen = ({navigation}: AddScreenProps) => {
     const [todo, setTodo] = React.useState('');
     const [enabled, setEnabled] = React.useState(false);
-    const [isAdd, setIsAdd] = React.useState(false);
     return (
         <SafeAreaView style={{backgroundColor: "#fff", flex: 1, alignItems: "center"}}>
             <Header back onBackPress={() => navigation.goBack()}/>
@@ -27,17 +27,11 @@ const AddScreen = ({navigation}: AddScreenProps) => {
                     <TextInput style={styles.input} onChangeText={setTodo} value={todo} placeholder={'입력해 주세요.'}
                                placeholderTextColor={'#7B889E'} onChange={() => setEnabled(true)}/>
                 </View>
-                <View style={styles.buttonBox}>
-                    <Pressable style={[styles.button, {borderColor: enabled ? '#101318' : '#DADEE7'}]}
-                               disabled={!enabled} onPress={() => {
-                        setIsAdd(true);
-                        setEnabled(false);
-                    }}>
-                        <Text style={[styles.name, {color: enabled ? '#101318' : '#7B889E'}]}>추가하기</Text>
-                    </Pressable>
-                </View>
             </View>
-            <FillButton enabled={isAdd} title={'완료'} onPress={() => navigation.navigate('Home')}/>
+            <FillButton enabled={enabled} title={'완료'} onPress={async () => {
+                await addTodo({title: todo, content: 'asdf'});
+                navigation.navigate('Home');
+            }}/>
         </SafeAreaView>
     );
 };

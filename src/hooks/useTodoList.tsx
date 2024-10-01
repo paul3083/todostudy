@@ -1,8 +1,8 @@
-import {useQuery} from "react-query";
 import {getTodoList} from "../lib/api/Todo.tsx";
+import {useSuspenseQuery} from "@tanstack/react-query";
 
 const useTodoList = () => {
-    const {data: todoList, refetch} = useQuery({
+    const {data: todoList, refetch} = useSuspenseQuery({
         queryKey: ['todoList'],
         queryFn: () => getTodoList(),
     });
